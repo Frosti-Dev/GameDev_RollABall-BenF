@@ -7,6 +7,7 @@ using TMPro;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 0;
+    public float jumpPower = 5f;
     public TextMeshProUGUI countText;
     public GameObject winTextObject;
     
@@ -14,6 +15,8 @@ public class PlayerController : MonoBehaviour
     private int count;
     private float movementX;
     private float movementY;
+    private bool isGrounded;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,13 +35,22 @@ public class PlayerController : MonoBehaviour
         movementX = movementVector.x;
         movementY = movementVector.y;
     }
-
+    
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+            isGrounded = false;
+        }
+    }
 
     private void FixedUpdate()
     {
-        Vector3 movement = new Vector3(movementX, 0.0f, movementY);
+       Vector3 movement = new Vector3(movementX, 0.0f, movementY);
         
-        rb.AddForce(movement * speed);
+       rb.AddForce(movement * speed);
+       
     }
 
     private void OnTriggerEnter(Collider other)
@@ -73,4 +85,14 @@ public class PlayerController : MonoBehaviour
             winTextObject.GetComponent<TextMeshProUGUI>().text = "You lose!";
         }
     }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+        
+    }
+
 }
