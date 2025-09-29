@@ -11,6 +11,7 @@ TagManager:
   - South
   - West
   - Ground
+  - OutOfBounds
   layers:
   - Default
   - TransparentFX

@@ -84,6 +84,14 @@ public class PlayerController : MonoBehaviour
             winTextObject.gameObject.SetActive(true);
             winTextObject.GetComponent<TextMeshProUGUI>().text = "You lose!";
         }
+
+        if (collision.gameObject.CompareTag("OutOfBounds"))
+        {
+            Destroy(gameObject);
+
+            winTextObject.gameObject.SetActive(true);
+            winTextObject.GetComponent<TextMeshProUGUI>().text = "You lose!";
+        }
     }
 
     private void OnCollisionStay(Collision collision)
