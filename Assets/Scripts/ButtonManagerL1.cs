@@ -1,16 +1,20 @@
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayButton : MonoBehaviour
+public class ButtonManagerL1 : MonoBehaviour
 {
     public void OnRetryButton()
     {
         SceneManager.LoadScene(1);
     }
 
+    public void OnNextButton()
+    {
+        SceneManager.LoadScene(2);
+    }
+
     public void OnQuitButton()
     {
-        Application.Quit();
+        SceneManager.LoadScene(0);
     }
 }

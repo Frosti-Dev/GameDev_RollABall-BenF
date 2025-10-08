@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class PlayerController : MonoBehaviour
     public float jumpPower = 5f;
     public TextMeshProUGUI countText;
     public GameObject winTextObject;
+    public GameObject retryTextObject;
+    public GameObject quitTextObject;
+    public GameObject nextTextObject;
     
     private Rigidbody rb;
     private int count;
@@ -23,9 +27,34 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         count = 0;
+        Scene currentScene = SceneManager.GetActiveScene();
+        string sceneName = currentScene.name;
+        if( sceneName == "Level1")
+        {
+            SetCountText();
+            winTextObject.SetActive(false);
+            retryTextObject.SetActive(false);
+            quitTextObject.SetActive(false);
+            nextTextObject.SetActive(false);
+        }
+        else if (sceneName == "Level2")
+        {
+            SetCountText();
+            winTextObject.SetActive(false);
+            retryTextObject.SetActive(false);
+            quitTextObject.SetActive(false);
+            nextTextObject.SetActive(false);
+        }
 
-        SetCountText();
-        winTextObject.SetActive(false);
+        else
+        {
+            SetCountText();
+            winTextObject.SetActive(false);
+            retryTextObject.SetActive(false);
+            quitTextObject.SetActive(false);
+            nextTextObject.SetActive(false);
+        }
+        
     }
 
     void OnMove(InputValue movementValue)
@@ -55,13 +84,29 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("PickUp"))
+        Scene currentScene = SceneManager.GetActiveScene();
+        string sceneName = currentScene.name;
+        if(sceneName == "Level1")
         {
-            other.gameObject.SetActive(false);
-            count = count + 1;
+            if (other.gameObject.CompareTag("PickUp"))
+            {
+                other.gameObject.SetActive(false);
+                count = count + 1;
 
-            SetCountText();
+                SetCountText();
+            }
         }
+        else if(sceneName == "Level2")
+        {
+            if (other.gameObject.CompareTag("PickUp"))
+            {
+                other.gameObject.SetActive(false);
+                count = count + 1;
+
+                SetCountText2D();
+            }
+        }
+        
     }
     
     void SetCountText()
@@ -70,6 +115,22 @@ public class PlayerController : MonoBehaviour
         if(count >= 12)
         {
             winTextObject.SetActive(true);
+            nextTextObject.SetActive(true);
+            quitTextObject.SetActive(true);
+
+            Destroy(GameObject.FindGameObjectWithTag("Enemy"));
+        }
+
+    }
+
+    void SetCountText2D()
+    {
+        countText.text = "GET THE THE EXIT: " + count.ToString() + "/1";
+        if (count == 1)
+        {
+            winTextObject.SetActive(true);
+            nextTextObject.SetActive(true);
+            quitTextObject.SetActive(true);
 
             Destroy(GameObject.FindGameObjectWithTag("Enemy"));
         }
@@ -83,6 +144,8 @@ public class PlayerController : MonoBehaviour
 
             winTextObject.gameObject.SetActive(true);
             winTextObject.GetComponent<TextMeshProUGUI>().text = "You lose!";
+            retryTextObject.SetActive(true);
+            quitTextObject.SetActive(true);
         }
 
         if (collision.gameObject.CompareTag("OutOfBounds"))
@@ -91,6 +154,8 @@ public class PlayerController : MonoBehaviour
 
             winTextObject.gameObject.SetActive(true);
             winTextObject.GetComponent<TextMeshProUGUI>().text = "You lose!";
+            retryTextObject.SetActive(true);
+            quitTextObject.SetActive(true);
         }
     }
 
