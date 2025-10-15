@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
         }
         else if (sceneName == "Level2")
         {
-            SetCountText();
+            SetCountText2D();
             winTextObject.SetActive(false);
             retryTextObject.SetActive(false);
             quitTextObject.SetActive(false);
@@ -119,6 +119,8 @@ public class PlayerController : MonoBehaviour
             quitTextObject.SetActive(true);
 
             Destroy(GameObject.FindGameObjectWithTag("Enemy"));
+            Destroy(GameObject.FindGameObjectWithTag("Player"));
+
         }
 
     }
@@ -133,6 +135,7 @@ public class PlayerController : MonoBehaviour
             quitTextObject.SetActive(true);
 
             Destroy(GameObject.FindGameObjectWithTag("Enemy"));
+            Destroy(GameObject.FindGameObjectWithTag("Player"));
         }
 
     }
