@@ -31,7 +31,11 @@ public class ButtonManager : MonoBehaviour
         SceneManager.LoadScene(3);
     }
   
-    
+    public void OnCloseButton()
+    {
+        levelSelection?.SetActive(false);
+    }
+
     public void OnQuitButton()
     {
         Application.Quit();

@@ -67,10 +67,24 @@ public class PlayerController : MonoBehaviour
 
     void OnMove(InputValue movementValue)
     {
-        Vector2 movementVector = movementValue.Get<Vector2>();
+        Scene currentScene = SceneManager.GetActiveScene();
+        string sceneName = currentScene.name;
+        if (sceneName == "Level2")
+        {
+            Vector2 movementVector = movementValue.Get<Vector2>();
 
-        movementX = movementVector.x;
-        movementY = movementVector.y;
+            movementX = movementVector.x;
+            
+        }
+
+        else
+        {
+            Vector2 movementVector = movementValue.Get<Vector2>();
+
+            movementX = movementVector.x;
+            movementY = movementVector.y;
+        }
+        
     }
     
     private void Update()
@@ -145,7 +159,7 @@ public class PlayerController : MonoBehaviour
             quitTextObject.SetActive(true);
 
             Destroy(GameObject.FindGameObjectWithTag("Enemy"));
-            Destroy(GameObject.FindGameObjectWithTag("Player"));
+            gameObject.SetActive(false);
 
         }
 
@@ -161,7 +175,7 @@ public class PlayerController : MonoBehaviour
             quitTextObject.SetActive(true);
 
             Destroy(GameObject.FindGameObjectWithTag("Enemy"));
-            Destroy(GameObject.FindGameObjectWithTag("Player"));
+            gameObject.SetActive(false);
 
         }
 
@@ -177,7 +191,7 @@ public class PlayerController : MonoBehaviour
             quitTextObject.SetActive(true);
 
             Destroy(GameObject.FindGameObjectWithTag("Enemy"));
-            Destroy(GameObject.FindGameObjectWithTag("Player"));
+            gameObject.SetActive(false);
         }
 
     }
