@@ -20,9 +20,7 @@ public class PlayerController : MonoBehaviour
     private float movementX;
     private float movementY;
     private bool isGrounded;
-    
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -46,6 +44,16 @@ public class PlayerController : MonoBehaviour
             nextTextObject.SetActive(false);
         }
 
+        else if (sceneName == "Level3")
+        {
+            SetCountTextL3();
+            winTextObject.SetActive(false);
+            retryTextObject.SetActive(false);
+            quitTextObject.SetActive(false);
+            nextTextObject.SetActive(false);
+        }
+
+
         else
         {
             SetCountText();
@@ -67,11 +75,18 @@ public class PlayerController : MonoBehaviour
     
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        Scene currentscene = SceneManager.GetActiveScene();
+        string sceneName = currentscene.name;
+
+        if (sceneName != "Level3")
         {
-            rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
-            isGrounded = false;
+            if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+            {
+                rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+                isGrounded = false;
+            }
         }
+        
     }
 
     private void FixedUpdate()
@@ -106,6 +121,17 @@ public class PlayerController : MonoBehaviour
                 SetCountText2D();
             }
         }
+
+        else if (sceneName == "Level3")
+        {
+            if (other.gameObject.CompareTag("PickUp"))
+            {
+                other.gameObject.SetActive(false);
+                count = count + 1;
+
+                SetCountTextL3();
+            }
+        }
         
     }
     
@@ -113,6 +139,22 @@ public class PlayerController : MonoBehaviour
     {
         countText.text = "Count: " + count.ToString() + "/12";
         if(count >= 12)
+        {
+            winTextObject.SetActive(true);
+            nextTextObject.SetActive(true);
+            quitTextObject.SetActive(true);
+
+            Destroy(GameObject.FindGameObjectWithTag("Enemy"));
+            Destroy(GameObject.FindGameObjectWithTag("Player"));
+
+        }
+
+    }
+
+    void SetCountTextL3()
+    {
+        countText.text = "Count: " + count.ToString() + "/45";
+        if (count >= 45)
         {
             winTextObject.SetActive(true);
             nextTextObject.SetActive(true);
@@ -143,7 +185,8 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
+            gameObject.SetActive(false);
 
             winTextObject.gameObject.SetActive(true);
             winTextObject.GetComponent<TextMeshProUGUI>().text = "You lose!";
@@ -153,7 +196,7 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.CompareTag("OutOfBounds"))
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
 
             winTextObject.gameObject.SetActive(true);
             winTextObject.GetComponent<TextMeshProUGUI>().text = "You lose!";
