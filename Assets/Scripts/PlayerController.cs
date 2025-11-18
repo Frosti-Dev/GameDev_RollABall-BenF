@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     public GameObject retryTextObject;
     public GameObject quitTextObject;
     public GameObject nextTextObject;
+    public GameObject FlashLight;
+    
     
     private Rigidbody rb;
     private int count;
@@ -99,6 +101,7 @@ public class PlayerController : MonoBehaviour
                 rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
                 isGrounded = false;
             }
+
         }
         
     }
@@ -160,6 +163,7 @@ public class PlayerController : MonoBehaviour
 
             Destroy(GameObject.FindGameObjectWithTag("Enemy"));
             gameObject.SetActive(false);
+            FlashLight.SetActive(false);
 
         }
 
@@ -176,6 +180,7 @@ public class PlayerController : MonoBehaviour
 
             Destroy(GameObject.FindGameObjectWithTag("Enemy"));
             gameObject.SetActive(false);
+            FlashLight.SetActive(false);
 
         }
 
@@ -192,6 +197,8 @@ public class PlayerController : MonoBehaviour
 
             Destroy(GameObject.FindGameObjectWithTag("Enemy"));
             gameObject.SetActive(false);
+            FlashLight.SetActive(false);
+
         }
 
     }
@@ -201,6 +208,7 @@ public class PlayerController : MonoBehaviour
         {
             //Destroy(gameObject);
             gameObject.SetActive(false);
+            FlashLight.SetActive(false);
 
             winTextObject.gameObject.SetActive(true);
             winTextObject.GetComponent<TextMeshProUGUI>().text = "You lose!";
@@ -211,6 +219,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("OutOfBounds"))
         {
             gameObject.SetActive(false);
+            FlashLight.SetActive(false);
 
             winTextObject.gameObject.SetActive(true);
             winTextObject.GetComponent<TextMeshProUGUI>().text = "You lose!";
