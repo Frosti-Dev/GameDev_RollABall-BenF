@@ -32785,8 +32785,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maincamera: {fileID: 1158163226}
-  minRotationY: -90
-  maxRotationY: 90
 --- !u!1 &1262424686
 GameObject:
   m_ObjectHideFlags: 0
@@ -36442,11 +36440,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8227516533761003280, guid: 15140fa1b43160b4bb7f1a3ffc0bc6bf, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -23.33
+      value: -23.19
       objectReference: {fileID: 0}
     - target: {fileID: 8227516533761003280, guid: 15140fa1b43160b4bb7f1a3ffc0bc6bf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.91
+      value: 0.17
       objectReference: {fileID: 0}
     - target: {fileID: 8227516533761003280, guid: 15140fa1b43160b4bb7f1a3ffc0bc6bf, type: 3}
       propertyPath: m_LocalPosition.z

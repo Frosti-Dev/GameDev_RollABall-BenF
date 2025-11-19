@@ -164,6 +164,7 @@ public class PlayerController : MonoBehaviour
             Destroy(GameObject.FindGameObjectWithTag("Enemy"));
             gameObject.SetActive(false);
             FlashLight.SetActive(false);
+            Cursor.visible = true;
 
         }
 
@@ -181,6 +182,7 @@ public class PlayerController : MonoBehaviour
             Destroy(GameObject.FindGameObjectWithTag("Enemy"));
             gameObject.SetActive(false);
             FlashLight.SetActive(false);
+            Cursor.visible = true;
 
         }
 
@@ -198,6 +200,7 @@ public class PlayerController : MonoBehaviour
             Destroy(GameObject.FindGameObjectWithTag("Enemy"));
             gameObject.SetActive(false);
             FlashLight.SetActive(false);
+            Cursor.visible = true;
 
         }
 
@@ -214,6 +217,7 @@ public class PlayerController : MonoBehaviour
             winTextObject.GetComponent<TextMeshProUGUI>().text = "You lose!";
             retryTextObject.SetActive(true);
             quitTextObject.SetActive(true);
+            Cursor.visible = true;
         }
 
         if (collision.gameObject.CompareTag("OutOfBounds"))
@@ -225,6 +229,7 @@ public class PlayerController : MonoBehaviour
             winTextObject.GetComponent<TextMeshProUGUI>().text = "You lose!";
             retryTextObject.SetActive(true);
             quitTextObject.SetActive(true);
+            Cursor.visible = true;
         }
     }
 
