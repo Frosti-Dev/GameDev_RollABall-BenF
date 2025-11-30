@@ -5,12 +5,7 @@ public class ButtonManagerL3 : MonoBehaviour
 {
     public void OnRetryButton()
     {
-        SceneManager.LoadScene(3);
-    }
-
-    public void OnNextButton()
-    {
-        SceneManager.LoadScene(4);
+        SceneManager.LoadScene(1);
     }
 
     public void OnQuitButton()

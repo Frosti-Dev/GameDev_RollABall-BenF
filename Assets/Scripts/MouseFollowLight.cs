@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MouseFollowLight : MonoBehaviour
 {
@@ -6,9 +7,22 @@ public class MouseFollowLight : MonoBehaviour
 
     void Update()
     {
-       Cursor.visible = false;
-        //mouse track
-        Ray ray = maincamera.ScreenPointToRay(Input.mousePosition);
+        //invis mouse
+        Scene currentScene = SceneManager.GetActiveScene();
+        string sceneName = currentScene.name;
+
+        if (sceneName == "MainMenu")
+        {
+            Cursor.visible = true;
+        }
+
+        else
+        {
+            Cursor.visible = false;
+        }
+
+            //mouse track
+            Ray ray = maincamera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
 

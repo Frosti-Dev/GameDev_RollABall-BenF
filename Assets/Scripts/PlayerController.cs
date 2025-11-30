@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     private int count;
     private float movementX;
     private float movementY;
-    private bool isGrounded;
+
 
     void Start()
     {
@@ -29,86 +29,29 @@ public class PlayerController : MonoBehaviour
         count = 0;
         Scene currentScene = SceneManager.GetActiveScene();
         string sceneName = currentScene.name;
-        if( sceneName == "Level1")
-        {
-            SetCountText();
-            winTextObject.SetActive(false);
-            retryTextObject.SetActive(false);
-            quitTextObject.SetActive(false);
-            nextTextObject.SetActive(false);
-        }
-        else if (sceneName == "Level2")
-        {
-            SetCountText2D();
-            winTextObject.SetActive(false);
-            retryTextObject.SetActive(false);
-            quitTextObject.SetActive(false);
-            nextTextObject.SetActive(false);
-        }
-
-        else if (sceneName == "Level3")
-        {
+     
             SetCountTextL3();
             winTextObject.SetActive(false);
             retryTextObject.SetActive(false);
             quitTextObject.SetActive(false);
             nextTextObject.SetActive(false);
-        }
-
-
-        else
-        {
-            SetCountText();
-            winTextObject.SetActive(false);
-            retryTextObject.SetActive(false);
-            quitTextObject.SetActive(false);
-            nextTextObject.SetActive(false);
-        }
         
     }
 
     void OnMove(InputValue movementValue)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        string sceneName = currentScene.name;
-        if (sceneName == "Level2")
-        {
-            Vector2 movementVector = movementValue.Get<Vector2>();
-
-            movementX = movementVector.x;
-            
-        }
-
-        else
-        {
-            Vector2 movementVector = movementValue.Get<Vector2>();
-
-            movementX = movementVector.x;
-            movementY = movementVector.y;
-        }
         
-    }
-    
-    private void Update()
-    {
-        Scene currentscene = SceneManager.GetActiveScene();
-        string sceneName = currentscene.name;
+      Vector2 movementVector = movementValue.Get<Vector2>();
 
-        if (sceneName != "Level3")
-        {
-            if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-            {
-                rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
-                isGrounded = false;
-            }
-
-        }
+      movementX = movementVector.x;
+      movementY = movementVector.y;
+        
         
     }
 
     private void FixedUpdate()
     {
-       Vector3 movement = new Vector3(movementX, 0.0f, movementY);
+        Vector3 movement = new Vector3(movementX, 0.0f, movementY);
         
        rb.AddForce(movement * speed);
        
@@ -116,59 +59,17 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        string sceneName = currentScene.name;
-        if(sceneName == "Level1")
-        {
-            if (other.gameObject.CompareTag("PickUp"))
-            {
-                other.gameObject.SetActive(false);
-                count = count + 1;
-
-                SetCountText();
-            }
-        }
-        else if(sceneName == "Level2")
-        {
-            if (other.gameObject.CompareTag("PickUp"))
-            {
-                other.gameObject.SetActive(false);
-                count = count + 1;
-
-                SetCountText2D();
-            }
-        }
-
-        else if (sceneName == "Level3")
-        {
-            if (other.gameObject.CompareTag("PickUp"))
+      if (other.gameObject.CompareTag("PickUp"))
             {
                 other.gameObject.SetActive(false);
                 count = count + 1;
 
                 SetCountTextL3();
             }
-        }
+        
         
     }
     
-    void SetCountText()
-    {
-        countText.text = "Count: " + count.ToString() + "/12";
-        if(count >= 12)
-        {
-            winTextObject.SetActive(true);
-            nextTextObject.SetActive(true);
-            quitTextObject.SetActive(true);
-
-            Destroy(GameObject.FindGameObjectWithTag("Enemy"));
-            gameObject.SetActive(false);
-            FlashLight.SetActive(false);
-            Cursor.visible = true;
-
-        }
-
-    }
 
     void SetCountTextL3()
     {
@@ -188,23 +89,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void SetCountText2D()
-    {
-        countText.text = "GET THE THE EXIT: " + count.ToString() + "/1";
-        if (count == 1)
-        {
-            winTextObject.SetActive(true);
-            nextTextObject.SetActive(true);
-            quitTextObject.SetActive(true);
-
-            Destroy(GameObject.FindGameObjectWithTag("Enemy"));
-            gameObject.SetActive(false);
-            FlashLight.SetActive(false);
-            Cursor.visible = true;
-
-        }
-
-    }
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
@@ -232,14 +116,4 @@ public class PlayerController : MonoBehaviour
             Cursor.visible = true;
         }
     }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isGrounded = true;
-        }
-        
-    }
-
 }
