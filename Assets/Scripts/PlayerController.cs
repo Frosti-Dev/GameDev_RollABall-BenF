@@ -14,7 +14,9 @@ public class PlayerController : MonoBehaviour
     public GameObject retryTextObject;
     public GameObject quitTextObject;
     public GameObject nextTextObject;
-    public GameObject FlashLight;
+    public GameObject flashLight;
+    public AudioSource pickupSound;
+    public AudioSource gameEndSound;
     
     
     private Rigidbody rb;
@@ -60,12 +62,13 @@ public class PlayerController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
       if (other.gameObject.CompareTag("PickUp"))
-            {
-                other.gameObject.SetActive(false);
-                count = count + 1;
+      {
+            other.gameObject.SetActive(false);
+            count = count + 1;
+            pickupSound.Play();
 
-                SetCountTextL3();
-            }
+            SetCountTextL3();
+      }
         
         
     }
@@ -76,13 +79,14 @@ public class PlayerController : MonoBehaviour
         countText.text = "Count: " + count.ToString() + "/45";
         if (count >= 45)
         {
+            gameEndSound.Play();
             winTextObject.SetActive(true);
             nextTextObject.SetActive(true);
             quitTextObject.SetActive(true);
 
             Destroy(GameObject.FindGameObjectWithTag("Enemy"));
             gameObject.SetActive(false);
-            FlashLight.SetActive(false);
+            flashLight.SetActive(false);
             Cursor.visible = true;
 
         }
@@ -93,9 +97,10 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
+            gameEndSound.Play();
             //Destroy(gameObject);
             gameObject.SetActive(false);
-            FlashLight.SetActive(false);
+            flashLight.SetActive(false);
 
             winTextObject.gameObject.SetActive(true);
             winTextObject.GetComponent<TextMeshProUGUI>().text = "You lose!";
@@ -106,8 +111,9 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.CompareTag("OutOfBounds"))
         {
+            gameEndSound.Play();
             gameObject.SetActive(false);
-            FlashLight.SetActive(false);
+            flashLight.SetActive(false);
 
             winTextObject.gameObject.SetActive(true);
             winTextObject.GetComponent<TextMeshProUGUI>().text = "You lose!";
